@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './drizzel/drizzle.module';
 import { ConfigModule } from '@nestjs/config';
+import { fileUploadModule } from './fileUploads/fileUpload.module';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { ConfigModule } from '@nestjs/config';
       isGlobal: true,
     }),
     DatabaseModule,
+    fileUploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -29,5 +29,5 @@ export const file = pgTable('files', {
   id: uuid('id')
     .primaryKey()
     .default(sql`gen_random_uuid()`),
-  filename: text('filename'),
+  file_url: text('file_url'),
 });
