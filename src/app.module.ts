@@ -5,6 +5,7 @@ import { DatabaseModule } from './drizzel/drizzle.module';
 import { ConfigModule } from '@nestjs/config';
 import { fileUploadModule } from './fileUploads/fileUpload.module';
 import { userModule } from './users/users.module';
+import { taskModual } from './tasks/tasks.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { userModule } from './users/users.module';
     DatabaseModule,
     fileUploadModule,
     userModule,
+    taskModual,
   ],
   controllers: [AppController],
   providers: [AppService],
