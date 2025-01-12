@@ -28,6 +28,20 @@ export const task = pgTable('task', {
   updated_at: timestamp('updated_at').defaultNow(),
 });
 
+export const subTask = pgTable('subTask', {
+  id: uuid('id')
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  title: text('title'),
+  description: text('description'),
+  task_id: uuid('task_id').references(() => task.id, {
+    onDelete: 'set null',
+  }),
+  status: taskTypeEnum('task_type').$default(() => 'Pending'),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
+
 export const file = pgTable('files', {
   id: uuid('id')
     .primaryKey()
