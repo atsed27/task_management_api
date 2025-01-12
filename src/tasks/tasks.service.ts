@@ -44,9 +44,11 @@ export class taskService {
     return result[0];
   }
 
-  async create(taskCreate: CreateTaskDto) {
+  async create(taskCreate: CreateTaskDto, userId: string) {
     try {
-      const result = await this.db.insert(task).values(taskCreate);
+      const result = await this.db
+        .insert(task)
+        .values({ ...taskCreate, user_id: userId });
       return result;
     } catch (error) {
       throw new InternalServerErrorException(

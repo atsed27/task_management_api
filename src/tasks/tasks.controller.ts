@@ -6,8 +6,9 @@ import {
   Param,
   Patch,
   Post,
+  Req,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiHeader, ApiTags } from '@nestjs/swagger';
 import { taskService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { CreateSubtaskDto } from './dto/create-subTask.dto';
@@ -39,9 +40,15 @@ export class taskController {
   findOneSubtask(@Param('id') id: string) {
     return this.taskService.findOneSubtask(id);
   }
+  @ApiHeader({
+    name: 'user-id',
+    description: 'ID of the user making the request',
+    required: true,
+  })
   @Post()
-  create(@Body() taskCreate: CreateTaskDto) {
-    return this.taskService.create(taskCreate);
+  create(@Body() taskCreate: CreateTaskDto, @Req() req: Request) {
+    const userId = req['user']?.id;
+    return this.taskService.create(taskCreate, userId);
   }
   //create subtask
   @Post('subtask')
