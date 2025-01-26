@@ -17,7 +17,11 @@ export const task = pgTable('task', {
   id: uuid('id')
     .primaryKey()
     .default(sql`gen_random_uuid()`),
+  card_id: uuid('card_id').references(() => card.id, {
+    onDelete: 'set null',
+  }),
   title: text('title'),
+
   description: text('description'),
   files: json('files'),
   user_id: uuid('user_id').references(() => user.id, {
@@ -47,6 +51,8 @@ export const file = pgTable('files', {
     .primaryKey()
     .default(sql`gen_random_uuid()`),
   file_url: text('file_url'),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
 });
 
 export const user = pgTable('usres', {
@@ -55,4 +61,27 @@ export const user = pgTable('usres', {
     .default(sql`gen_random_uuid()`),
   full_name: text('full_name'),
   user_name: text('user_name').unique(),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
+
+export const mainTask = pgTable('mainTask', {
+  id: uuid('id')
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  title: text('title'),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+});
+
+export const card = pgTable('card', {
+  id: uuid('id')
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  mainTask_id: uuid('mainTask_id').references(() => mainTask.id, {
+    onDelete: 'set null',
+  }),
+  card: text('card'),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
 });

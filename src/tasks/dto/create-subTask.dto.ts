@@ -3,8 +3,8 @@ import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateSubtaskDto {
   @ApiProperty({
-    description: 'create docke file',
-    title: 'Docker',
+    description: 'create  sub task',
+    title: 'Task',
   })
   @IsNotEmpty()
   @IsString()

@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { fileUploadModule } from './fileUploads/fileUpload.module';
 import { userModule } from './users/users.module';
 import { taskModual } from './tasks/tasks.module';
+import { mainTaskModual } from './tasks/mainTasks/maintask.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { taskModual } from './tasks/tasks.module';
     fileUploadModule,
     userModule,
     taskModual,
+    mainTaskModual,
   ],
   controllers: [AppController],
   providers: [AppService],
