@@ -1,0 +1,32 @@
+# Node modules
+node_modules
+npm-debug.log
+
+# Build output
+dist
+build
+
+# Test coverage
+coverage
+
+# IDE and editor files
+.vscode
+.idea
+*.iml
+
+# Logs
+logs
+*.log
+
+# Temporary files
+tmp
+temp
+
+# Git files
+.git
+.gitignore
+.husky
+
+# Other potential exclusions
+Dockerfile
+docker-compose.yml
