@@ -28,7 +28,9 @@ export class mainTaskService {
         case 
           when ${task.id} is not null then jsonb_build_object(
             'id', ${task.id},
-            'title', ${task.title}
+            'title', ${task.title},
+            'description',${task.description},
+            'status',${task.status}
           )
           else null
         end

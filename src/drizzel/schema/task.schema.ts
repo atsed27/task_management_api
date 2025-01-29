@@ -23,7 +23,6 @@ export const task = pgTable('task', {
   title: text('title'),
 
   description: text('description'),
-  files: json('files'),
   user_id: uuid('user_id').references(() => user.id, {
     onDelete: 'set null',
   }),
@@ -51,6 +50,9 @@ export const file = pgTable('files', {
     .primaryKey()
     .default(sql`gen_random_uuid()`),
   file_url: text('file_url'),
+  task_id: uuid('task_id').references(() => task.id, {
+    onDelete: 'set null',
+  }),
   created_at: timestamp('created_at').defaultNow(),
   updated_at: timestamp('updated_at').defaultNow(),
 });

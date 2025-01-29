@@ -1,6 +1,9 @@
 import {
+  Body,
   Controller,
+  Get,
   NotFoundException,
+  Param,
   Post,
   UploadedFile,
   UseInterceptors,
@@ -14,17 +17,27 @@ import { UploadFileDto } from './dto/upload-file.dto';
 export class FileUploadController {
   constructor(private readonly fileUploadService: FileUploadService) {}
 
-  @Post()
+  @Post(':id')
   @UseInterceptors(FileInterceptor('file'))
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     description: 'Upload a file',
     type: UploadFileDto,
   })
-  async uploadFile(@UploadedFile() file: Express.Multer.File) {
+  async uploadFile(
+    @UploadedFile() file: Express.Multer.File,
+    @Param('id') id: string,
+  ) {
     if (!file) {
       throw new NotFoundException('No file uploaded!');
     }
-    return this.fileUploadService.uploadFile(file);
+    return this.fileUploadService.uploadFile(file, id);
+  }
+
+  //get file by task
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    console.log('ij', id);
+    return this.fileUploadService.findOne(id);
   }
 }

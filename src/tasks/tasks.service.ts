@@ -26,7 +26,7 @@ export class taskService {
     if (!result.length) {
       throw new NotFoundException(`Task with ID ${id} not found.`);
     }
-    return result[0];
+    return result;
   }
 
   async findAllSubTask() {
@@ -44,11 +44,11 @@ export class taskService {
     return result[0];
   }
 
-  async create(taskCreate: CreateTaskDto, userId: string) {
+  async create(taskCreate: CreateTaskDto, id: string, userId: string) {
     try {
       const result = await this.db
         .insert(task)
-        .values({ ...taskCreate, user_id: userId });
+        .values({ ...taskCreate, user_id: userId, card_id: id });
       return result;
     } catch (error) {
       throw new InternalServerErrorException(
