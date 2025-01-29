@@ -1,5 +1,6 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { v2 as cloudinary, UploadApiResponse } from 'cloudinary';
+import { eq } from 'drizzle-orm';
 import { DRIZZLE } from 'src/drizzel/drizzle.module';
 import { file } from 'src/drizzel/schema/task.schema';
 import { Readable } from 'stream';
@@ -11,7 +12,10 @@ export class FileUploadService {
     @Inject(DRIZZLE) private readonly db,
   ) {}
 
-  async uploadFile(files: Express.Multer.File): Promise<UploadApiResponse> {
+  async uploadFile(
+    files: Express.Multer.File,
+    id: string,
+  ): Promise<UploadApiResponse> {
     return new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
         {
@@ -24,6 +28,7 @@ export class FileUploadService {
           //upload url to database
           await this.db.insert(file).values({
             file_url: result?.url,
+            task_id: id,
           });
           resolve(result);
         },
@@ -31,5 +36,17 @@ export class FileUploadService {
 
       Readable.from(files.buffer).pipe(uploadStream);
     });
+  }
+
+  async findOne(id: string) {
+    const result = await this.db
+      .select()
+      .from(file)
+      .where(eq(file.task_id, id));
+
+    if (!result.length) {
+      throw new NotFoundException(`Task with ID ${id} not found.`);
+    }
+    return result;
   }
 }

@@ -45,10 +45,14 @@ export class taskController {
     description: 'ID of the user making the request',
     required: true,
   })
-  @Post()
-  create(@Body() taskCreate: CreateTaskDto, @Req() req: Request) {
+  @Post(':id')
+  create(
+    @Body() taskCreate: CreateTaskDto,
+    @Param('id') id: string,
+    @Req() req: Request,
+  ) {
     const userId = req['user']?.id;
-    return this.taskService.create(taskCreate, userId);
+    return this.taskService.create(taskCreate, id, userId);
   }
   //create subtask
   @Post('subtask')
