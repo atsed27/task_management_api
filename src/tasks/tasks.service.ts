@@ -37,11 +37,12 @@ export class taskService {
     const result = await this.db
       .select()
       .from(subTask)
-      .where(eq(subTask.id, id));
+      .where(eq(subTask.task_id, id));
     if (!result.length) {
       throw new NotFoundException(`Subtask with ID ${id} not found.`);
     }
-    return result[0];
+
+    return result;
   }
 
   async create(taskCreate: CreateTaskDto, id: string, userId: string) {

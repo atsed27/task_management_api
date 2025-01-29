@@ -25,20 +25,27 @@ export class taskController {
     return this.taskService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.taskService.findOne(id);
-  }
-
   //get all sub task
   @Get('subtask')
   findAllSubTask() {
     return this.taskService.findAllSubTask();
   }
-  //get one sub task
   @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.taskService.findOne(id);
+  }
+  //get one sub task
+  @Get('subtask/:id')
   findOneSubtask(@Param('id') id: string) {
+    console.log('la');
     return this.taskService.findOneSubtask(id);
+  }
+
+  //create subtask
+  @Post('subtask')
+  createSubTask(@Body() subTaskCreate: CreateSubtaskDto) {
+    console.log(subTaskCreate);
+    return this.taskService.createSubTask(subTaskCreate);
   }
   @ApiHeader({
     name: 'user-id',
@@ -54,11 +61,7 @@ export class taskController {
     const userId = req['user']?.id;
     return this.taskService.create(taskCreate, id, userId);
   }
-  //create subtask
-  @Post('subtask')
-  createSubTask(@Body() subTaskCreate: CreateSubtaskDto) {
-    return this.taskService.createSubTask(subTaskCreate);
-  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() UpdateTask: UpdateTaskDto) {
     return this.taskService.updateTask(id, UpdateTask);
