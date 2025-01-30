@@ -44,9 +44,6 @@ export class FileUploadService {
       .from(file)
       .where(eq(file.task_id, id));
 
-    if (!result.length) {
-      throw new NotFoundException(`Task with ID ${id} not found.`);
-    }
     return result;
   }
 }

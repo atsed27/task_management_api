@@ -38,9 +38,6 @@ export class taskService {
       .select()
       .from(subTask)
       .where(eq(subTask.task_id, id));
-    if (!result.length) {
-      throw new NotFoundException(`Subtask with ID ${id} not found.`);
-    }
 
     return result;
   }
