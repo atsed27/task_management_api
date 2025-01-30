@@ -55,7 +55,6 @@ export class mainTaskService {
   }
   async create(mainTaskCreate: CreateMainTaskDto) {
     try {
-      console.log(mainTaskCreate);
       const result = await this.db.insert(mainTask).values(mainTaskCreate);
       return result;
     } catch (error) {

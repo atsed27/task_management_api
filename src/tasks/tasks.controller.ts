@@ -37,7 +37,6 @@ export class taskController {
   //get one sub task
   @Get('subtask/:id')
   findOneSubtask(@Param('id') id: string) {
-    console.log('la');
     return this.taskService.findOneSubtask(id);
   }
 

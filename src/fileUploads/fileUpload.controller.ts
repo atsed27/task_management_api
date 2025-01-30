@@ -37,7 +37,6 @@ export class FileUploadController {
   //get file by task
   @Get(':id')
   findOne(@Param('id') id: string) {
-    console.log('ij', id);
     return this.fileUploadService.findOne(id);
   }
 }
